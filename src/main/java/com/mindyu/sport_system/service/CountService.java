@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -70,6 +71,11 @@ public class CountService {
 	public Count findOne(Integer id) {
 
 		return countDao.findById(id).get();
+	}
+
+	public Count findToday(Integer id, Date date) {
+
+		return countDao.getCountByUserIdAndDateGreaterThanEqual(id, date);
 	}
 
 	public void add(Count count) {

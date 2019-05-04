@@ -1,5 +1,8 @@
 package com.mindyu.sport_system.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,13 +21,13 @@ public class Info {
 	@Id
 	@GeneratedValue
 	private Integer id;//
-
-
-	
 	private Integer userId;//
+	private String sex;
 	private Double height;//
 	private Integer stepPlan;//
 	private Double weight;//
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date birthday;//
 	private String phone;//
 	private String address;//
@@ -49,7 +52,15 @@ public class Info {
 		this.userId = userId;
 	}
 
-	public Double getHeight() {		
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public Double getHeight() {
 		return height;
 	}
 	public void setHeight(Double height) {
@@ -131,6 +142,7 @@ public class Info {
 		return "Info{" +
 				"id=" + id +
 				", userId=" + userId +
+				", sex=" + sex +
 				", height=" + height +
 				", stepPlan=" + stepPlan +
 				", weight=" + weight +

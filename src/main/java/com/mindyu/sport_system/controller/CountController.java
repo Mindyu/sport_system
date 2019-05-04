@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,19 +27,28 @@ public class CountController {
 	private CountService countService;
 
 
-	@RequestMapping(value="/",method=RequestMethod.GET)
-	public List<Count> findByUserId(@RequestBody Count count ){
-		return countService.getCountsByUserId(count.getUserId());
-	}
-
 	/**
-	 * 根据ID查询
-	 * @param id ID
+	 * 根据用户ID查询所有步数信息
+	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public Count findOne(@PathVariable Integer id){
-		return countService.findOne(id);
+	public List<Count> findByUserId(@PathVariable Integer id){
+		return countService.getCountsByUserId(id);
+	}
+
+	/**
+	 * 根据用户ID查询当天的记录
+	 * @param id ID
+	 * @return
+	 */
+	@RequestMapping(value="/today/{id}",method=RequestMethod.GET)
+	public Count findTodayStepCount(@PathVariable Integer id){
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		date = new Date(date.getYear(), date.getMonth(), date.getDate());
+
+		return countService.findToday(id, date);
 	}
 	
 	/**
@@ -71,12 +81,23 @@ public class CountController {
 	 * @param count
 	 */
 	@RequestMapping(value="/",method=RequestMethod.POST)
-	public Result add(@RequestBody Count count){
-		count.setDate(new Date());
-		count.setStatus(0);
-		countService.add(count);	
-		
-		return new Result(200,"新增成功");
+	public Result save(@RequestBody Count count){
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		date = new Date(date.getYear(), date.getMonth(), date.getDate());
+
+		Count tmp = countService.findToday(count.getUserId(), date);
+		if (tmp == null){ // 不存在则新增
+			count.setDate(new Date());
+			count.setStatus(0);
+			countService.add(count);
+			return new Result(200,"新增成功");
+		}else{ // 修改
+			tmp.setStepCount(count.getStepCount());
+			tmp.setDate(new Date());
+			countService.update(tmp);
+			return new Result(200,"修改成功");
+		}
 	}
 	
 	/**
@@ -86,7 +107,7 @@ public class CountController {
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public Result update(@RequestBody Count count,@PathVariable Integer id ){
 		count.setId(id);
-		countService.update(count);		
+		countService.update(count);
 		return new Result(200,"修改成功");
 	}
 	

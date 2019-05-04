@@ -74,14 +74,20 @@ public class InfoController {
 	 * @param info
 	 */
 	@RequestMapping(value="/",method=RequestMethod.POST)
-	public Result add(@RequestBody Info info  ){
-
-		info.setStatus(0);
-		info.setCreatedAt(new Date());
-		info.setUpdatedAt(new Date());
-		infoService.add(info);	
-		
-		return new Result(200,"新增成功");
+	public Result save(@RequestBody Info info  ){
+		Info tmp = infoService.findInfoByUserId(info.getUserId());
+		if (tmp==null){
+			info.setStatus(0);
+			info.setCreatedAt(new Date());
+			info.setUpdatedAt(new Date());
+			infoService.add(info);
+			return new Result(200,"新增成功");
+		}else{
+			info.setId(tmp.getId());
+			info.setUpdatedAt(new Date());
+			infoService.update(info);
+			return new Result(200,"修改成功");
+		}
 	}
 	
 	/**
