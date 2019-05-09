@@ -6,8 +6,6 @@ public class Result {
 	private String message;
 	private Object data;
 	
-	
-	
 	public Result( Integer code, String message, Object data) {
 		super();
 		this.code = code;

@@ -23,6 +23,8 @@ public class Info {
 	private Integer id;//
 	private Integer userId;//
 	private String sex;
+	private String avator;//
+	private String email;//
 	private Double height;//
 	private Integer stepPlan;//
 	private Double weight;//
@@ -50,6 +52,22 @@ public class Info {
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public String getAvator() {
+		return avator;
+	}
+
+	public void setAvator(String avator) {
+		this.avator = avator;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getSex() {

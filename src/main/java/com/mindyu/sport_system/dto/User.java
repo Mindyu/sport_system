@@ -44,7 +44,5 @@ public class User implements Serializable{
     public User(com.mindyu.sport_system.pojo.User user){
         this.id = user.getId();
         this.userName = user.getUserName();
-        this.avator = user.getAvator();
-        this.email = user.getEmail();
     }
 }

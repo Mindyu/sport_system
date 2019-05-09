@@ -18,8 +18,6 @@ public class User implements Serializable{
 	private String userName;
 	private String password;//
 	private String salt;//
-	private String avator;//
-	private String email;//
 	private Integer status;//
 	private Integer createdAt;//
 	private Integer updatedAt;//
@@ -53,20 +51,6 @@ public class User implements Serializable{
 		this.salt = salt;
 	}
 
-	public String getAvator() {		
-		return avator;
-	}
-	public void setAvator(String avator) {
-		this.avator = avator;
-	}
-
-	public String getEmail() {		
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public Integer getStatus() {		
 		return status;
 	}
@@ -95,8 +79,6 @@ public class User implements Serializable{
 				", userName='" + userName + '\'' +
 				", password='" + password + '\'' +
 				", Salt='" + salt + '\'' +
-				", avator='" + avator + '\'' +
-				", email='" + email + '\'' +
 				", status=" + status +
 				", createdAt=" + createdAt +
 				", updatedAt=" + updatedAt +
